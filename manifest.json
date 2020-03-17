@@ -1,0 +1,27 @@
+{
+  "name": "LateFeeCalc04",
+  "version": "1.0",
+  "description": "calculate late fees for the STAR lab",
+  "permissions": ["activeTab", "storage", "declarativeContent"],
+  "options_page": "options.html",
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "page_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/starsixteen.png",
+      "32": "images/star32.png",
+      "48": "images/star48.png",
+      "128": "images/star128.png"
+    }
+  },
+  "icons": {
+    "16": "images/starsixteen.png",
+    "32": "images/star32.png",
+    "48": "images/star48.png",
+    "128": "images/star128.png"
+  },
+  "manifest_version": 2
+}
