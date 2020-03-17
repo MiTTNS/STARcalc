@@ -1,5 +1,5 @@
 {
-  "name": "LateFeeCalc04",
+  "name": "STAR lab late fee calculator",
   "version": "1.0",
   "description": "calculate late fees for the STAR lab",
   "permissions": ["activeTab", "storage", "declarativeContent"],
