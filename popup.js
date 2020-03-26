@@ -80,6 +80,16 @@ getLatesBtn.onclick = function(element) {
             // non late returns, but also have this block output a message
             // indicating this should be unreachable
             // but if you see it let me know
+            var noLateDiv = document.createElement('div');
+            var noLateP = document.createElement('p');
+
+            noLateDiv.appendChild(noLateP);
+            noLateP.textContent = "not late";
+            root.appendChild(noLateDiv);
+
+            chrome.storage.sync.set({scheduledTimeFlag: false, realTimeFlag: false});
+
+            return
           }
 
           lates = 0;
