@@ -58,21 +58,21 @@ happen.
 Next we check that the flags are true to ensure we found the correct dates followed by a bunch of data massaging shown below...
 
 ```javascript
-          var splitStartDate = data.scheduledEndTime.split(" ");
-          var startDateDate = new Date(splitStartDate[0] + " " + splitStartDate[1] + " " + splitStartDate[2]);
-          var startTime = splitStartDate[3].split(":");
-          var startHour = (splitStartDate[4] == "PM" && startTime[0] != "12" ? parseInt(startTime[0]) + 12 : parseInt(startTime[0]));
-          var startMin = startTime[1];
+var splitStartDate = data.scheduledEndTime.split(" ");
+var startDateDate = new Date(splitStartDate[0] + " " + splitStartDate[1] + " " + splitStartDate[2]);
+var startTime = splitStartDate[3].split(":");
+var startHour = (splitStartDate[4] == "PM" && startTime[0] != "12" ? parseInt(startTime[0]) + 12 : parseInt(startTime[0]));
+var startMin = startTime[1];
 
-          var splitEndDate = data.realEndTime.split(" ");
-          var endDateDate = new Date(splitEndDate[0] + " " + splitEndDate[1] + " " + splitEndDate[2]);
-          var endTime = splitEndDate[3].split(":");
-          var endHour = (splitEndDate[4] == "PM" && endTime[0] != "12" ? parseInt(endTime[0]) + 12 : parseInt(endTime[0]));
-          var endMin = endTime[1];
+var splitEndDate = data.realEndTime.split(" ");
+var endDateDate = new Date(splitEndDate[0] + " " + splitEndDate[1] + " " + splitEndDate[2]);
+var endTime = splitEndDate[3].split(":");
+var endHour = (splitEndDate[4] == "PM" && endTime[0] != "12" ? parseInt(endTime[0]) + 12 : parseInt(endTime[0]));
+var endMin = endTime[1];
 
-          var days = (endDateDate - startDateDate) / 86400000;
+var days = (endDateDate - startDateDate) / 86400000;
 
-          var lates = 0;
+var lates = 0;
 ```
 
 Basically were turning the String dates we pulled from the DOM into something we can use.  
