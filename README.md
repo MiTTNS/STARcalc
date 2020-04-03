@@ -75,4 +75,13 @@ var days = (endDateDate - startDateDate) / 86400000;
 var lates = 0;
 ```
 
-Basically were turning the String dates we pulled from the DOM into something we can use.  
+Basically were turning the String dates we pulled from the DOM into something we can use.  The names here aren't great, if
+someone came along with new names for the variables I'd be okay with that.  
+For refrence, "startDate" refers to the scheduled end time for a checkout.  It is the start time for the accrual late fees.
+"endDate" refers to the actual end time of a checkout.  It is the end time for the accrual of late fees.  The prefix "split" 
+refers to a version of those stringly typed date values that has been turned into an array.  The suffex "Date" (an extra 
+occurance of the word "Date") refers to a Date object made using the original start and end dates.  The "Hour" and 
+"Min" variables are going to be used later to decide how many hours late a checkout is.  The "Hour" variables are set using 
+ternary operations.  If you arent familiar with ternarys I'll have more on that below.  Finally, days is calculated 
+by subtracting the start date from the end date.  This normally gives the result in milliseconds, but dividing by 
+86400000 turns that into days.  
