@@ -85,3 +85,56 @@ occurance of the word "Date") refers to a Date object made using the original st
 ternary operations.  If you arent familiar with ternarys I'll have more on that below.  Finally, days is calculated 
 by subtracting the start date from the end date.  This normally gives the result in milliseconds, but dividing by 
 86400000 turns that into days.  
+
+Next...
+```javsscript
+if (days < 0 || (days == 0 && (endHour - startHour <= 0 || (endHour - startHour == 0 && endMin > startMin)))) {
+  var noLateDiv = document.createElement('div');
+  var noLateP = document.createElement('p');
+
+  noLateDiv.appendChild(noLateP);
+  noLateP.textContent = "not late";
+  root.appendChild(noLateDiv);
+
+  chrome.storage.sync.set({scheduledTimeFlag: false, realTimeFlag: false});
+
+  return
+}
+```
+Just checking that the equipment is actually late.  I'm mostly sure this works right, but I kept getting distracted 
+while working on it so if someone could prove it does or does not work that'd be great.  Inside the conditional it
+outputs text saying the equipment is not late, resets the flags, and before returning early to pervent 
+the rest of the code from running.
+
+```javascript
+if (days == 0) {
+  endHours = endHour - startHour - (endMin < startMin ? 1 : 0);
+  startHours = 0;
+} else if (days > 0) {
+  startHours = week[startDateDate.getDay()].closeHour - startHour - (parseInt(startMin) == 0 ? 0 : 1);
+  endHours = endHour - week[endDateDate.getDay()].openHour - (parseInt(endMin) < parseInt(startMin) ? 1 : 0) + (parseInt(endMin) > 0 ? 1 : 0);
+} else {
+  // comments omitted
+            
+  var noLateDiv = document.createElement('div');
+  var noLateP = document.createElement('p');
+
+  noLateDiv.appendChild(noLateP);
+  noLateP.textContent = "not late";
+  root.appendChild(noLateDiv);
+
+  chrome.storage.sync.set({scheduledTimeFlag: false, realTimeFlag: false});
+
+  return
+}
+```
+
+This section is all about setting up the hours for the days where a late fee is accued, but a full day does 
+not elapse.  How this part and the next part work together is one of the things that has change the most accross
+the different versions of the project.  If you can come up with a better way to do this let me know.  
+
+For now it does subtraction with startHour, endHour, and the lab's hours of opperation (depending on how many 
+days late the equipment is) then adding in some boolean modifiers based on the relationship between the time the
+fee started accuring and the time it stopped.
+
+Finally there is an else block that I think is redundant but I still haven't taken the time to prove.  
