@@ -87,7 +87,7 @@ by subtracting the start date from the end date.  This normally gives the result
 86400000 turns that into days.  
 
 Next...
-```javsscript
+```javascript
 if (days < 0 || (days == 0 && (endHour - startHour <= 0 || (endHour - startHour == 0 && endMin > startMin)))) {
   var noLateDiv = document.createElement('div');
   var noLateP = document.createElement('p');
