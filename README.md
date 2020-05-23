@@ -25,8 +25,8 @@ effort to make the hours of opperation editable.
    to the following day to calculate and return late fees.  This was changed to the while loop below because 
    the STAR lab has been open longer than 1000 days.  
    
-Below the class are all the days of the week, the actual week, and refrences to elements of popup.html used to 
-trigger events and show results.  
+Below the class are all the days of the week, the actual week array that holds those days, and refrences to 
+elements of popup.html used to trigger events and show results.  
 
 Finally we get to the good stuff at `getLatesBtn.onclick = function(element) {`.  The line following this clears 
 the space used to output messages but after that we have...
@@ -138,3 +138,42 @@ days late the equipment is) then adding in some boolean modifiers based on the r
 fee started accuring and the time it stopped.
 
 Finally there is an else block that I think is redundant but I still haven't taken the time to prove.  
+
+Ok, we just need two more things.  
+
+```javascript
+lates = 0;
+day = week[startDateDate.getDay()];
+```
+Lates refers to the number of times a late fee has accrued.  In the UI this value will be expressed and the 
+number of hours the allocation is late.  Technically this terminology is incorrect because if the allocation goes 
+over night it only accures once, so I use the variable name ```lates```.  Anyway, we're making sure it's zeored 
+out.  Next we're using ```startDateDate```, a date object, to index into the array ```week```, which holdes all of 
+the day objects.  
+
+We're ready to go, the next part finds out how much the late fee is worth.  
+
+```javascript
+while (days > 0 || startHours > 0 || endHours > 0) {
+  if (days > 0 && startHours > 0) {
+    lates += startHours;
+    startHours = 0;
+    days -= 1;
+    lates += 1;
+    day = day.nextDay;
+  } else if (days > 0) {
+    if (day.addsLates) {
+      lates += day.hoursOpen;
+      lates += 1;
+    }
+    days -= 1;
+    day = day.nextDay;
+  } else {
+    lates += endHours;
+    endHours = 0;
+  }
+}
+```
+
+This part is pretty straight forward, we just loop through the days of the week 
+and add the proper amount to ```lates```.
