@@ -19,6 +19,7 @@ doing, but feel free to jump around.
 * Paid button: once a fee has been calculated the extension should allow the user to specify that the fee 
 has been paid.  Doing so would add a line to a Google Sheets spreadsheet that the sups could refrence.  I have 
 some refrences that could be helpful in making this but I still need to make sure they are good.  
+* Firefox: this version works in chromium based browsers but not Firefox, and I like Firefox.  
 
 
 # Below is file explanations
