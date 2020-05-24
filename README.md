@@ -177,3 +177,107 @@ while (days > 0 || startHours > 0 || endHours > 0) {
 
 This part is pretty straight forward, we just loop through the days of the week 
 and add the proper amount to ```lates```.
+
+```javascript
+let div = document.createElement('div');
+
+let p1 = document.createElement('p');
+p1.textContent = "hours: " + lates;
+
+let p2 = document.createElement('p');
+p2.textContent = "late fee: $" + lates * 5;
+
+div.appendChild(p1);
+div.appendChild(p2);
+
+root.appendChild(div);
+```
+
+We're finally in the home stretch, we just need some html elements to lode our calculated late fee into.  If you 
+don't remember the top of the file where we declared ```root``` it's just a part of the popup that we use to show 
+data.  Now for some one last thing ```chrome.storage.sync.set({scheduledTimeFlag: false, realTimeFlag: false});```, 
+we just need to reset the flags for the time values.  These are just how we ensure the page we're on actually has 
+dates.  If you look at the js document there is an else block right below this line that is what happens if both of 
+these flags are not true.  
+
+### getDates.js
+
+Despite its small size, this file is super important.  This is what reads the DOM to find the dates for when the allocation 
+was supposed to be returned and when it was actually returned.  If the extension ever stops working you should check 
+the structure of WebCheckout and compair it to how this file looks through the page.  In its current state, the part 
+of WebCheckout that has the info we want should look something like this:
+
+```html
+<div id="property-field" class="propery-row">
+  <div class="property-sheet-label">
+    scheduledEndTime:
+  </div>
+  <div class="property-sheet-value" data-se-id="allocation.scheduledEndTime.input">
+    <property-display>
+      <timestamp-renderer>
+        <ng-form>
+          <div class="">
+            Jan 20, 2019 1:30 PM
+          </div>
+        </ng-form>
+      </timestamp-renderer>
+    </property-display>
+  </div>
+</div>
+<br>
+<div id="property-field" class="propery-row">
+  <div class="property-sheet-label">
+    realEndTime:
+  </div>
+  <div class="property-sheet-value" data-se-id="allocation.realEndTime.input">
+    <property-display>
+      <timestamp-renderer>
+        <ng-form>
+          <div class="">
+            Jan 31, 2019 1:30 PM
+          </div>
+        </ng-form>
+      </timestamp-renderer>
+    </property-display>
+  </div>
+</div>
+```
+
+This would be surrounded by several other similar structures that make up the column on the left side of the page.  
+We care about two things here, the id "property-field" and the "data-se-id" attributes.  Let's look at something: 
+
+```javascript
+var searches = Array.from(document.querySelectorAll("#property-field")).filter(checkDiv);
+```
+```querySelectorAll``` gives us every html element with the id "property-field".  There are a lot of those so we 
+filter the results using the filter method that's apart of arrays.  That method takes a function as an argument 
+(we have a word for that, remember callbacks).  The function we supply it is called ```checkDiv```, here it is:
+
+```javascript
+function checkDiv(aDiv) {
+  return aDiv.children[1].dataset.seId === "allocation.scheduledEndTime.input" || aDiv.children[1].dataset.seId === "allocation.realEndTime.input";
+}
+```
+
+I'm sure at least one person looking at this will not be familar with the dataset attributes in html so I'm going 
+to leave a link [here](https://developer.mozilla.org/en-US/docs/Web/API/HTMLOrForeignElement/dataset) to get you 
+up to speed.  These are a little weird, but the important part is that the function ```checkDiv(aDiv)``` 
+is looking at the "seId" dataset attribute to determine if we need the entire div for the next part.  
+
+Ok, we got through the hard part, we should have our data.  Now we just need to make it available.  
+
+```javascript
+searches.forEach(function(e) {
+  if (e.children[1].dataset.seId === "allocation.scheduledEndTime.input") {
+    chrome.storage.sync.set({scheduledEndTime: e.children[1].innerText, scheduledTimeFlag: true});
+    //console.log(e.children[1].innerText);
+  } else if (e.children[1].dataset.seId === "allocation.realEndTime.input") {
+    chrome.storage.sync.set({realEndTime: e.children[1].innerText, realTimeFlag: true});
+    //console.log(e.children[1].innerText);
+  }
+})
+```
+
+Loop thorugh each of the html elements and place them in the containers for either scheduled or real end time.  Also 
+set the flags to true to indicate that the dates have been found.  The commented out part just prints the html elements 
+in console.  I had that there for debugging, sometimes it helps to see what your working with.  
