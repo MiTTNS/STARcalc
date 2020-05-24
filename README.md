@@ -14,6 +14,13 @@ doing, but feel free to jump around.
 3. [documentation page for tabs.executeScript](https://developer.chrome.com/extensions/tabs#method-executeScript)
   * this is what we actually use over content scripts
 
+## Further work to be done:
+* Options page: build out the options page to allow users to change out hours of opperation for times like summer
+* Paid button: once a fee has been calculated the extension should allow the user to specify that the fee 
+has been paid.  Doing so would add a line to a Google Sheets spreadsheet that the sups could refrence.  I have 
+some refrences that could be helpful in making this but I still need to make sure they are good.  
+
+
 # Below is file explanations
 ### popup.js
 
