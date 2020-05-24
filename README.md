@@ -14,8 +14,8 @@ doing, but feel free to jump around.
 3. [documentation page for tabs.executeScript](https://developer.chrome.com/extensions/tabs#method-executeScript)
   * this is what we actually use over content scripts
 
-#Below is file explanations
-###popup.js
+# Below is file explanations
+### popup.js
 
 This file is attached to popup.html and is where most of the heavy lifting is done.  Up at the top is a definition 
 for the Day class that is used to calculate late fees.  This class will need to be added to and edited in an 
