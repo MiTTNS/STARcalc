@@ -21,6 +21,9 @@ has been paid.  Doing so would add a line to a Google Sheets spreadsheet that th
 some refrences that could be helpful in making this but I still need to make sure they are good.  
 * Firefox: this version works in chromium based browsers but not Firefox, and I like Firefox.  
 
+## Install link: 
+[Chrome](https://chrome.google.com/webstore/detail/star-lab-late-fee-calcula/doblbnpleipongdkgccbcbcplbeekmkc/related?hl=en&authuser=0)
+
 
 # Below is file explanations
 ### popup.js
